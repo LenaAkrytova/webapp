@@ -1,0 +1,180 @@
+
+html
+{
+    box-sizing: border-box;
+    height: 100%;
+}
+
+body
+{
+    background-attachment: fixed;  
+    background-image: url('../img/body-background.jpg') ;
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+
+form > fieldset:last-child
+{
+    position: relative;
+    float: right;
+    margin-top: 10px;
+    right: 40px;
+}
+
+form > fieldset:last-child > *
+{
+    margin-left: 10px;
+}
+
+
+header
+{
+	background-color: black;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+body > header
+{
+    display: block;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+header .layout-wrap > *
+{
+	display: inline-block;
+
+}
+
+.search-box
+{
+    float: right;
+}
+
+nav
+{
+    padding-top: 50px;
+    padding-bottom: 40px;
+}
+
+.nav-section
+{
+    background-color: black;
+    background-position: center 70px;
+    background-repeat: no-repeat;
+    color: white;
+    display: inline-block;
+    height: 150px;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+    padding-top: 15px;
+    vertical-align: top;
+    width: 30%;
+}
+
+.nav-section:nth-child(1)
+{
+    background-image: url('../img/icons/action-report-new.png');
+}
+
+.nav-section:nth-child(2)
+{
+    background-image: url('../img/icons/action-report-top.png');
+}
+
+.nav-section:nth-child(3)
+{
+    background-image: url('../img/icons/actions-help.png');
+}
+
+.menu
+{
+    position: relative;
+    top: 50px;
+}
+
+.menu-caption > p
+{
+    background-color: #DEDEDE;
+    color: #2C3E50;
+    display: block;
+    padding: 8px;
+    padding-left: 15px;
+    text-align: left;
+}
+
+.action-list
+{
+    border: 1px solid #B8B8B8;
+    overflow: hidden;
+    position: relative;
+}
+
+.action-list > li
+{
+    background-color: #E3E3E3;
+    padding: 8px;
+    padding-left: 15px;
+    text-align: left;
+}
+
+.action-list a
+{
+    color: #636363;
+    display: block;
+}
+
+
+.page-body 
+{
+    background-color: rgba(0,0,0,0.3);
+    bottom: 0;
+    height: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+    position: relative;
+    text-align: center;
+}
+
+.tabs
+{
+    height: 100%;
+}
+
+.tabs-list
+{
+    height: 50px;
+}
+
+.tabs-list > li
+{
+    background-color: #636363;
+    float: left;
+    height: 100px;
+    line-height: 50px;
+    margin-right: 2%;
+    text-align: center;
+    width: 23.5%;
+}
+
+.tabs-list > li:last-child
+{
+    margin-right: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
