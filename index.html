@@ -3,15 +3,19 @@
     <head>
         <meta charset = "UTF-8">
         <title>WebApp</title>
-       
+
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
     </head>
     <body>
         <header>
           <div class="layout-wrap">
             <a href="#quick-reports"><img src="img/logo-netcraft.svg" alt="netcraft"></a>
+
+            <form class="search-box">
+                <input type="search" id="q" name="q" placeholder="Search">
+                <button id="searchGo" hidden>Go</button>
+            </form>
           </div>
         </header>
 
@@ -102,7 +106,71 @@
                     
                 </ul>
 
-             
+                <div id="quick-reports-cont" class="tab-content">
+                    
+                    <div class="tab-settings-wrap">
+                        <form class="form-inline">
+                            <fieldset class="form-row form-group">
+                                <label>Report 1</label>
+                                <label for="report01name">Report Name:</label>
+                                <input id="report01name" type="text" placeholder="Site Name">
+                                <label for="report01url">Report URL:</label>
+                                <input id="report01url" type="text" placeholder="http://www...">
+                            </fieldset> 
+                            <fieldset class="form-row form-group">
+                                <label>Report 2</label>
+                                <label for="report02name">Report Name:</label>
+                                <input id="report02name" type="text" placeholder="Site Name">
+                                <label for="report02url">Report URL:</label>
+                                <input id="report02url" type="text" placeholder="http://www...">
+                            </fieldset>
+                            <fieldset class="form-row form-group">
+                                <label>Report 3</label>
+                                <label for="report03name">Report Name:</label>
+                                <input id="report03name" type="text" placeholder="Site Name">
+                                <label for="report03url">Report URL:</label>
+                                <input id="report03url" type="text" placeholder="http://www...">
+                            </fieldset>
+                            <fieldset>
+                                <a id="report-cancel" href="">Cancel</a>
+                                <button id="save-quick-settings" class="btn btn-primary">Save</button>   
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="my-team-folders-cont" class="tab-content">
+                     
+                    <div class="tab-settings-wrap">
+                        <form class="form-inline">
+                            <fieldset class="form-row form-group">
+                                <label>Folder 1</label>
+                                <label for="folder01name">Report Name:</label>
+                                <input id="folder01name" type="text" placeholder="Site Name">
+                                <label for="folder01url">Report URL:</label>
+                                <input id="folder01url" type="text" placeholder="http://www...">
+                            </fieldset>
+                            <fieldset class="form-row form-group">
+                                <label>Folder 2</label>
+                                <label for="folder02name">Report Name:</label>
+                                <input id="folder02name" type="text" placeholder="Site Name">
+                                <label for="folder02url">Report URL:</label>
+                                <input id="folder02url" type="text" placeholder="http://www...">
+                            </fieldset>
+                            <fieldset class="form-row form-group">
+                                <label>Folder 3</label>
+                                <label for="folder03name">Report Name:</label>
+                                <input id="folder03name" type="text" placeholder="Site Name">
+                                <label for="folder03url">Report URL:</label>
+                                <input id="folder03url" type="text" placeholder="http://www...">
+                            </fieldset>
+                            <fieldset>
+                                <a id="folders-cancel" href="">Cancel</a>
+                                <button id="save-folder-settings" class="btn btn-primary">Save</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
 
                 <div id="public-folders-cont" class="tab-content frame-tab"></div>
             </div>
