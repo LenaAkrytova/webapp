@@ -83,24 +83,28 @@
                 <ul class="tabs-list">
                     <li class="active-tab">   <!--a chego oni takie bol'shie-->
                         <a href="#quick-reports">
-                           Quick Reports
+                            <span class="glyphicon glyphicon-new-window"></span> 
+                            Quick Reports
                         </a>
                     </li>
                     
                     <li>
                         <a href="#my-folders">
-                           My Folders
+                            <span class="glyphicon glyphicon-star"></span>
+                            My Folders
                         </a>
                     </li>
                     
                     <li>
                         <a href="#my-team-folders">
+                            <span class="glyphicon glyphicon-folder-open"></span> 
                             My Team Folders
                         </a>
                     </li>
 
                     <li>
                         <a href="#public-folders">
+                            <span class="glyphicon glyphicon-file"></span> 
                             Public Folders
                         </a>
                     </li>
@@ -108,6 +112,10 @@
                 </ul>
 
                 <div id="quick-reports-cont" class="tab-content">
+                   <div class="col-xs-2">
+                        <select class="form-control link-selector">
+                        </select>
+                    </div>
                     
                     <div class="tab-settings-wrap">
                         <form class="form-inline">
@@ -138,10 +146,14 @@
                             </fieldset>
                         </form>
                     </div>
+                    <iframe id="quick-report-iframe"></iframe>
                 </div>
 
                 <div id="my-team-folders-cont" class="tab-content">
-                     
+                    <div class="col-xs-2">
+                        <select class="form-control link-selector"></select>
+                    </div>
+                    
                     <div class="tab-settings-wrap">
                         <form class="form-inline">
                             <fieldset class="form-row form-group">
@@ -173,6 +185,10 @@
                     </div>
                     <iframe id="team-folders-iframe"></iframe>
                     </div>
+
+                <div id="my-folders-cont" class="tab-content frame-tab">
+                    <iframe src="http://lib.ru"></iframe>
+                </div>
 
                 <div id="public-folders-cont" class="tab-content frame-tab">
                     <iframe src="http://www.haifa.ac.il"></iframe>
