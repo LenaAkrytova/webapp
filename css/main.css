@@ -373,7 +373,7 @@ nav
     margin-left: 1%;
     margin-right: 3%;
     position: relative;
-    width: 95%;
+    width: 90%;
 }
 
 .notifications
@@ -384,7 +384,7 @@ nav
     position: relative;
     text-align: left;
     top: 20px;
-    width: 90%;
+    width: 95%;
 }
 
 ul
