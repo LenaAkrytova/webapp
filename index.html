@@ -3,10 +3,8 @@
     <head>
         <meta charset = "UTF-8">
         <title>WebApp</title>
-
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
     </head>
     <body>
         <header>
@@ -31,7 +29,7 @@
                       <div class="menu-caption"> 
                         <p>
                             Choose QS report
-                            
+                            <span class="arrow glyphicon glyphicon-chevron-down"></span>
                         </p>
                       </div>
                       <ul class="action-list">
@@ -81,29 +79,29 @@
 
             <div class="tabs">
                 <ul class="tabs-list">
-                    <li class="active-tab">   <!--a chego oni takie bol'shie-->
-                        <a href="#quick-reports">
+                    <li id="quick-reports-tabBtn" class="active-tab">   <!--a chego oni takie bol'shie-->
+                        <a id="goto-quick-reports" href="#quick-reports">
                             <span class="glyphicon glyphicon-new-window"></span> 
                             Quick Reports
                         </a>
                     </li>
                     
-                    <li>
-                        <a href="#my-folders">
+                    <li id="my-folders-tabBtn">
+                        <a id="goto-my-folders" href="#my-folders">
                             <span class="glyphicon glyphicon-star"></span>
                             My Folders
                         </a>
                     </li>
                     
-                    <li>
-                        <a href="#my-team-folders">
+                    <li id="my-team-folders-tabBtn">
+                        <a id="goto-team-folders" href="#my-team-folders">
                             <span class="glyphicon glyphicon-folder-open"></span> 
                             My Team Folders
                         </a>
                     </li>
 
-                    <li>
-                        <a href="#public-folders">
+                    <li id="public-folders-tabBtn">
+                        <a id="goto-public-folders" href="#public-folders">
                             <span class="glyphicon glyphicon-file"></span> 
                             Public Folders
                         </a>
@@ -112,7 +110,10 @@
                 </ul>
 
                 <div id="quick-reports-cont" class="tab-content">
-                   <div class="col-xs-2">
+                    <span id="qr-wheel" class="settings-wheel corner-icon"></span>
+                    <span class="GoToURL-icon corner-second-icon"><a href="" target="_blank"></a></span>
+
+                    <div class="col-xs-2">
                         <select class="form-control link-selector">
                         </select>
                     </div>
@@ -150,6 +151,10 @@
                 </div>
 
                 <div id="my-team-folders-cont" class="tab-content">
+                    <span id="mf-wheel" class="settings-wheel corner-icon"></span>
+                    <span class="GoToURL-icon corner-second-icon"><a href="" target="_blank"></a></span>  <!--ne pojmu otkuda eto tut-->
+
+
                     <div class="col-xs-2">
                         <select class="form-control link-selector"></select>
                     </div>
@@ -187,14 +192,21 @@
                     </div>
 
                 <div id="my-folders-cont" class="tab-content frame-tab">
+                    <span class="GoToURL-icon corner-icon"><a href="http://lib.ru" target="_blank"></a></span>
                     <iframe src="http://lib.ru"></iframe>
                 </div>
 
                 <div id="public-folders-cont" class="tab-content frame-tab">
+                    <span class="GoToURL-icon corner-icon"><a href="http://www.haifa.ac.il" target="_blank"></a></span>
                     <iframe src="http://www.haifa.ac.il"></iframe>
                 </div>
             </div>
         </div>
-     
+
+
+        <!-- H5BP -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>

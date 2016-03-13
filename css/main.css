@@ -185,8 +185,50 @@ nav
     display: block;
 }
 
+.action-list a:active, .action-list a:focus
+{
+    color: #636363;
+}
+
+.action-list li:hover
+{
+     background-color: #D1D1D1;
+}
+
+.action-list li:hover a
+{
+    color: #2C3E50;
+}
+
+.active-tab, .active-tab a:focus, .active-tab a:active
+{
+    background-color: #EBEBEB !important;
+}
+
+.active-tab > a, .active-tab a:hover
+{
+    color: #393939 !important;
+}
+
+.corner-icon
+{
+    float: right;
+    padding: 10px;
+    position: relative;
+    right: 2.5%;
+}
+
+.corner-second-icon
+{
+    float: right;
+    position: relative;
+    padding: 14px;
+    right: 2.5%;
+}
+
 .form-row
 {
+    background-color: #E6E6E6;
     display: inline-block;
     height: 50px;
     margin-left: auto;
@@ -196,6 +238,7 @@ nav
     padding-left: 20px;
     padding-top: 10px;
     position: relative;
+    text-align: left;
     width: 95%;
 }
 
@@ -210,6 +253,16 @@ nav
     width: 30%;
 }
 
+.frame-tab > iframe, .tab-content > iframe
+{
+    clear: both;
+}
+
+.GoToURL-icon
+{
+    content: url('../img/icons/expand.png');
+    cursor: pointer;
+}
 
 .page-body 
 {
@@ -234,6 +287,18 @@ nav
     position: relative;
 }
 
+.tabs a:hover
+{
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.tabs a:focus
+{    
+    background-color: #525252;
+    color: white;
+}
+
 .tabs-list
 {
     height: 50px;
@@ -250,6 +315,11 @@ nav
     margin-right: 2%;
     text-align: center;
     width: 23.5%;
+}
+
+.tabs-list > li:hover
+{
+    background-color: rgba(0,0,0,0.5);
 }
 
 .tabs-list > li:last-child
@@ -304,6 +374,17 @@ nav
     margin-right: 3%;
     position: relative;
     width: 95%;
+}
+
+.notifications
+{
+    background-color: #EBEBEB;
+    padding: 10px;
+    padding-left: 15px;
+    position: relative;
+    text-align: left;
+    top: 20px;
+    width: 90%;
 }
 
 ul
