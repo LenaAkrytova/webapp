@@ -2,14 +2,14 @@ var UTILS = (function () {
 
 	return {
 		addEvent: function(elem, type, handler) {
-			if(window.addEventListener) 
+			if(window.addEventListener)
 			{
-                // new browser
+			    // new browser
 	            elem.addEventListener(type, handler, false);
 	        }
 	        else if(window.attachEvent)
 	        {
-                // old style
+	            // old style
 	            elem.attachEvent('on' + type, handler);
 	        }
 	        else
@@ -17,5 +17,14 @@ var UTILS = (function () {
 	            elem['on' + type] = handler;
 	        }
 		},
+		EnsureHTTPPrefix: function (url)
+        {
+	        if ((!url.startsWith("http://")) && (!url.startsWith("http://")))
+            {
+                url = "http://" + url;
+            }
+
+            return url;
+        },
 	};
 }());
