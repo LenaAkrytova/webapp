@@ -2,9 +2,12 @@ var tabsHashNames = ["#quick-reports", "#my-folders", "#my-team-folders", "#publ
 var quickReportsSavedLinks = [];
 var myTeamSavedLinks = [];
 var SAVED_LINKS_KEY = "webAppSavedLinks";
+var ERROR_CSS_CLASS_NAME = "error-highlight";
+var FIELD_NUMBER = 3;
 
 $(document).ready(function () {
     document.location.hash = '#quick-reports';
+
     UTILS.addEvent(window, "hashchange", gotoCurrentTab);
     $('#goto-quick-reports').click(setHash);
     $('#goto-my-folders').click(setHash);
@@ -14,7 +17,59 @@ $(document).ready(function () {
 
     $('.tab-content').hide();
     $('#quick-reports-cont').show();
-    
+
+    $('#qr-wheel').click(function () {
+        if (ShowHideElement($('#quick-reports-cont .tab-settings-wrap'))) {
+            $('#report01name').focus();
+        }
+    });
+
+    $('#mf-wheel').click(function () {
+        if (ShowHideElement($('#my-team-folders-cont .tab-settings-wrap'))) {
+            $('#folder01name').focus();
+        }
+    });
+
+    $("#report-cancel").click(function () {
+        ShowHideElement($('#quick-reports-cont .tab-settings-wrap'));
+        return false;
+    });
+
+    $("#folders-cancel").click(function () {
+        ShowHideElement($('#my-team-folders-cont .tab-settings-wrap'));
+        return false;
+    });
+
+    $('.tab-content input').blur(function (event) {
+        if (event.target.value != "") {
+            addRequiredDependency(getCorrespondingField(event.target.id));
+        }
+        else {
+            var field = getCorrespondingField(event.target.id);
+            if (field.hasAttribute('required')) {
+                field.removeAttribute('required');
+            }
+        }
+    });
+
+    $('#save-quick-settings').click(saveQuickLinks);
+    $('#save-folder-settings').click(updateTeamFoldersLinks);
+
+    $('#quick-reports-cont .link-selector').change(function () {
+        var selectedURL = this.value;
+        $('#quick-report-iframe').attr('src', selectedURL);
+        var expandAnchor = $('#quick-reports-cont .GoToURL-icon').get(0).children[0];
+        expandAnchor.setAttribute('href', selectedURL);
+    });
+
+    $('#my-team-folders-cont .link-selector').change(function () {
+        var selectedURL = this.value;
+        $('#team-folders-iframe').attr('src', selectedURL);
+        var expandAnchor = $('#my-team-folders-cont .GoToURL-icon').get(0).children[0];
+        expandAnchor.setAttribute('href', selectedURL);
+    });
+
+    loadFromLocalStorage();
 });
 
 
@@ -32,13 +87,162 @@ function gotoCurrentTab()
 	tabName += "-cont";
 
 	$(".tabs li").removeClass('active-tab');
-	$('#' + tabBtn).addClass('active-tab');
+    $('#' + tabBtn).addClass('active-tab');
 
 	$(".tab-content").hide();
 	$('#' + tabName).show();
 
     // sohranit` linki
     updateLinksInLocalStorage();		
+}
+
+function ShowHideElement(element)
+{
+    if (element.hasClass('hidden'))
+	{
+        element.removeClass('hidden');
+		return true;
+	}
+	else
+	{
+        element.addClass('hidden');
+		return false;
+	}
+}
+
+function getCorrespondingField(fieldId)
+{
+	var newSuffix = ((fieldId.endsWith("name")) ? "url" : "name");
+	var newFieldId = fieldId.replace(newSuffix.endsWith("name") ? "url" : "name", newSuffix);
+	return ($('#' + newFieldId)[0]);
+}
+
+function addRequiredDependency(field)
+{
+	if(!field.hasAttribute('required'))
+	{
+		field.setAttribute('required', 'true');
+	}
+}
+
+function isFormValid(formName)
+{
+    if ($('#' + formName + ' form:valid').length != 0)
+	{
+		return true;
+    }
+
+	return false;
+}
+
+function saveQuickLinks()
+{
+    $('#quick-reports-cont input:valid').removeClass(ERROR_CSS_CLASS_NAME);
+    $('#quick-reports-cont input:invalid').addClass(ERROR_CSS_CLASS_NAME);
+
+    for (i = 1; i <= FIELD_NUMBER; i++)
+	{
+		var urlField = $('#report0' + i + 'url');
+		urlField.get(0).setCustomValidity('');
+    }
+
+	if (isFormValid("quick-reports-cont"))
+	{
+	    ShowHideElement($('#quick-reports-cont .tab-settings-wrap'));
+	    quickReportsSavedLinks = [];
+
+	    var linksSelect = $('#quick-reports-cont .link-selector');
+	            
+		for (i = 1; i <= FIELD_NUMBER; i++)
+		{
+		    var urlField = $('#report0' + i + 'url').get(0);
+		    if (urlField.value != "") {
+		        urlField.value = UTILS.EnsureHTTPPrefix(urlField.value);
+		    }
+
+			if ($('#' + "report0" + i + "name").get(0).value != "")
+			{
+				quickReportsSavedLinks.push({ value: $('#' + "report0" + i + "url").get(0).value, text: $('#' + "report0" + i + "name").get(0).value });
+			}
+		}
+
+		updateLinksInLocalStorage();
+
+		if (quickReportsSavedLinks.length == 0)
+		{
+			$('#quick-report-iframe').hide();
+			linksSelect.hide();
+		}
+		else
+		{
+			$('#quick-report-iframe').show();
+			linksSelect.show();
+			linksSelect.get(0).selectedIndex = (0);
+			linksSelect.trigger('change');
+		}
+	}
+}
+
+function updateTeamFoldersLinks()
+{
+    $('#my-team-folders-cont input:valid').removeClass(ERROR_CSS_CLASS_NAME);
+    $('#my-team-folders-cont input:invalid').addClass(ERROR_CSS_CLASS_NAME);
+
+	for (i = 1; i <= FIELD_NUMBER; i++)
+	{
+		var urlField = $('#folder0' + i + 'url');
+		if (urlField.get(0).value != "")
+		{
+		    urlField.addClass(ERROR_CSS_CLASS_NAME);
+			urlField.get(0).setCustomValidity('Please enter a valid URL.');
+		}
+		else
+		{
+			urlField.get(0).setCustomValidity('');
+			if ((urlField.get(0).value != "") || !urlField.get(0).hasAttribute('required'))
+			{
+			    urlField.removeClass(ERROR_CSS_CLASS_NAME);
+			}
+		}
+	}
+
+	if (isFormValid("my-team-folders-cont"))
+	{
+	    ShowHideElement($('#my-team-folders-cont .tab-settings-wrap'));
+	    myTeamSavedLinks = [];
+	    var linksSelect = $('#my-team-folders-cont .link-selector');
+
+	    for (i = 1; i <= FIELD_NUMBER; i++)
+		{
+		    var urlField = $('#folder0' + i + 'url').get(0);
+
+		    if (urlField.value != "")
+		    {
+		        urlField.value = UTILS.EnsureHTTPPrefix(urlField.value);
+		    }
+
+			var nameField = "folder0" + i + "name";
+			if ($('#' + nameField).get(0).value != "")
+			{
+				myTeamSavedLinks.push({ value: $('#' + "folder0" + i + "url").get(0).value, text: $('#' + nameField).get(0).value });
+			}
+		}
+
+		updateLinksInLocalStorage();
+
+		if (myTeamSavedLinks.length == 0)
+		{
+			$('#team-folders-iframe').hide();
+			linksSelect.hide();
+		}
+		else
+		{
+			$('#team-folders-iframe').show();
+			linksSelect.show();
+			linksSelect.get(0).selectedIndex = (0); // first
+			linksSelect.trigger('change');
+		}
+	}
 }
 
 function updateLinksInLocalStorage()
@@ -60,6 +264,9 @@ function populateSettingsForm(fromData, fieldNamePrefix)
 
         $('#' + urlField).get(0).value = fromData[i].value;
         $('#' + nameField).get(0).value = fromData[i].text;
+
+        addRequiredDependency($('#' + nameField).get(0));
+        addRequiredDependency($('#' + urlField).get(0));
     }
 }
 
@@ -71,7 +278,6 @@ function loadFromLocalStorage()
 	{
 	    quickReportsSavedLinks = JSON.parse(savedData.split('$')[0]);
 	    myTeamSavedLinks = JSON.parse(savedData.split('$')[1]);
-
 	    var savedHash = savedData.split('$')[2];
 	    if (savedHash)
 	    {
@@ -113,14 +319,17 @@ function loadFromLocalStorage()
 
 function linkSearch(e)
 {
-	e.preventDefault(); // chto qto i zachem - poka neyasno
+    e.preventDefault(); // chto qto i zachem - poka neyasno
 	var searchVal = $('#q').get(0).value.toLowerCase();
 
 	for(i = 0; i < quickReportsSavedLinks.length; i++)
 	{
 		if (quickReportsSavedLinks[i].text.toLowerCase().indexOf(searchVal) != -1)
 		{
-		    $('#goto-quick-reports').trigger('click');
+		    //
+		    // This is needed to prevent reload of the found link
+            //
+			$('#goto-quick-reports').trigger('click');
 			$('#quick-reports-cont .link-selector').get(0).selectedIndex = i;
 			$('#quick-reports-cont .link-selector').trigger('change');
 			return;
