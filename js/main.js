@@ -69,9 +69,13 @@ $(document).ready(function () {
         expandAnchor.setAttribute('href', selectedURL);
     });
 
+    $('.GoToURL-icon').click(function (e) {
+        window.open(e.target.childNodes[0].href, '_blank');
+    });
+
+    readNotification();
     loadFromLocalStorage();
 });
-
 
 function setHash()
 {
@@ -87,13 +91,23 @@ function gotoCurrentTab()
 	tabName += "-cont";
 
 	$(".tabs li").removeClass('active-tab');
-    $('#' + tabBtn).addClass('active-tab');
+	$('#' + tabBtn).addClass('active-tab');
 
 	$(".tab-content").hide();
 	$('#' + tabName).show();
 
     // sohranit` linki
     updateLinksInLocalStorage();		
+}
+
+function readNotification()
+{
+	$.get("data/config.json", "json", function(data){
+		if (data["notification"])
+		{
+		    $('.notifications').text(data["notification"]).removeClass('hidden');
+		}
+	});
 }
 
 function ShowHideElement(element)
@@ -143,8 +157,20 @@ function saveQuickLinks()
     for (i = 1; i <= FIELD_NUMBER; i++)
 	{
 		var urlField = $('#report0' + i + 'url');
-		urlField.get(0).setCustomValidity('');
-    }
+		if (urlField.get(0).value != "")
+		{
+		    urlField.get(0).setCustomValidity('URL is not in a supported format.');
+		    urlField.addClass(ERROR_CSS_CLASS_NAME);
+		}
+		else
+		{
+			urlField.get(0).setCustomValidity('');
+			if ((urlField.get(0).value != "") || !urlField.get(0).hasAttribute('required'))
+			{
+			    urlField.removeClass(ERROR_CSS_CLASS_NAME);
+			}
+		}
+	}
 
 	if (isFormValid("quick-reports-cont"))
 	{
@@ -152,11 +178,12 @@ function saveQuickLinks()
 	    quickReportsSavedLinks = [];
 
 	    var linksSelect = $('#quick-reports-cont .link-selector');
-	            
+        
 		for (i = 1; i <= FIELD_NUMBER; i++)
 		{
 		    var urlField = $('#report0' + i + 'url').get(0);
-		    if (urlField.value != "") {
+		    if (urlField.value != "")
+		    {
 		        urlField.value = UTILS.EnsureHTTPPrefix(urlField.value);
 		    }
 
@@ -166,6 +193,7 @@ function saveQuickLinks()
 			}
 		}
 
+		fillSelect('#quick-reports-cont .link-selector', quickReportsSavedLinks.length);
 		updateLinksInLocalStorage();
 
 		if (quickReportsSavedLinks.length == 0)
@@ -192,10 +220,10 @@ function updateTeamFoldersLinks()
 	{
 		var urlField = $('#folder0' + i + 'url');
 		if (urlField.get(0).value != "")
-		{
+        {
 		    urlField.addClass(ERROR_CSS_CLASS_NAME);
 			urlField.get(0).setCustomValidity('Please enter a valid URL.');
-		}
+        }
 		else
 		{
 			urlField.get(0).setCustomValidity('');
@@ -228,6 +256,7 @@ function updateTeamFoldersLinks()
 			}
 		}
 
+	    fillSelect('#my-team-folders-cont .link-selector', myTeamSavedLinks.length);
 		updateLinksInLocalStorage();
 
 		if (myTeamSavedLinks.length == 0)
@@ -239,7 +268,7 @@ function updateTeamFoldersLinks()
 		{
 			$('#team-folders-iframe').show();
 			linksSelect.show();
-			linksSelect.get(0).selectedIndex = (0); // first
+			linksSelect.get(0).selectedIndex = (0); 
 			linksSelect.trigger('change');
 		}
 	}
@@ -289,6 +318,8 @@ function loadFromLocalStorage()
 	    }
 	}	
 	
+	fillSelect('#quick-reports-cont .link-selector', quickReportsSavedLinks.length);
+	fillSelect('#my-team-folders-cont .link-selector', myTeamSavedLinks.length);
 	populateSettingsForm(quickReportsSavedLinks, "report0");
 	populateSettingsForm(myTeamSavedLinks, "folder0");
 
@@ -326,13 +357,9 @@ function linkSearch(e)
 	{
 		if (quickReportsSavedLinks[i].text.toLowerCase().indexOf(searchVal) != -1)
 		{
-		    //
-		    // This is needed to prevent reload of the found link
-            //
-			$('#goto-quick-reports').trigger('click');
+		    $('#goto-quick-reports').trigger('click');
 			$('#quick-reports-cont .link-selector').get(0).selectedIndex = i;
 			$('#quick-reports-cont .link-selector').trigger('change');
-			return;
 		}
 	}
 
@@ -343,9 +370,16 @@ function linkSearch(e)
 			$('#goto-team-folders').trigger('click');
 			$('#my-team-folders-cont .link-selector').get(0).selectedIndex = i;
 			$('#my-team-folders-cont .link-selector').trigger('change');
-			return;
 		}
 	}
 
 	$('.notifications').removeClass('hidden').text('The search for \"' + searchVal + '\" yielded no results.');
+}
+
+function fillSelect(select, len)
+{
+    for (i = 0; i < len; i++)
+    {
+        $(select).append($('<option>', myTeamSavedLinks[i]));
+    }
 }
