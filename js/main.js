@@ -202,7 +202,7 @@ function saveQuickLinks()
     for (i = 1; i <= FIELD_NUMBER; i++)
 	{
 		var urlField = $('#report0' + i + 'url');
-		if (urlField.get(0).value != "")
+		if ((urlField.get(0).value != "") && (!UTILS.CheckURL(urlField.get(0).value)))
 		{
 		    urlField.get(0).setCustomValidity('URL is not in a supported format.');
 		    urlField.addClass(ERROR_CSS_CLASS_NAME);
@@ -264,7 +264,7 @@ function updateTeamFoldersLinks()
 	for (i = 1; i <= FIELD_NUMBER; i++)
 	{
 		var urlField = $('#folder0' + i + 'url');
-		if (urlField.get(0).value != "")
+		if ((urlField.get(0).value != "") && (!UTILS.CheckURL(urlField.get(0).value)))
 		{
 		    urlField.addClass(ERROR_CSS_CLASS_NAME);
 			urlField.get(0).setCustomValidity('Please enter a valid URL.');
