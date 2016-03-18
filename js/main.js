@@ -223,6 +223,7 @@ function saveQuickLinks()
 	    quickReportsSavedLinks = [];
 
 	    var linksSelect = $('#quick-reports-cont .link-selector');
+	    linksSelect.empty();
         
 		for (i = 1; i <= FIELD_NUMBER; i++)
 		{
@@ -284,6 +285,7 @@ function updateTeamFoldersLinks()
 	    ShowHideElement($('#my-team-folders-cont .tab-settings-wrap'));
 	    myTeamSavedLinks = [];
 	    var linksSelect = $('#my-team-folders-cont .link-selector');
+	    linksSelect.empty();
 
 	    for (i = 1; i <= FIELD_NUMBER; i++)
 		{
