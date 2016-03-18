@@ -238,7 +238,7 @@ function saveQuickLinks()
 			}
 		}
 
-		fillSelect('#quick-reports-cont .link-selector', quickReportsSavedLinks.length);
+		fillSelect('#quick-reports-cont .link-selector', quickReportsSavedLinks);
 		updateLinksInLocalStorage();
 
 		if (quickReportsSavedLinks.length == 0)
@@ -301,7 +301,7 @@ function updateTeamFoldersLinks()
 			}
 		}
 
-	    fillSelect('#my-team-folders-cont .link-selector', myTeamSavedLinks.length);
+	    fillSelect('#my-team-folders-cont .link-selector', myTeamSavedLinks);
 		updateLinksInLocalStorage();
 
 		if (myTeamSavedLinks.length == 0)
@@ -363,8 +363,8 @@ function loadFromLocalStorage()
 	    }
 	}	
 	
-	fillSelect('#quick-reports-cont .link-selector', quickReportsSavedLinks.length);
-	fillSelect('#my-team-folders-cont .link-selector', myTeamSavedLinks.length);
+	fillSelect('#quick-reports-cont .link-selector', quickReportsSavedLinks);
+	fillSelect('#my-team-folders-cont .link-selector', myTeamSavedLinks);
 	populateSettingsForm(quickReportsSavedLinks, "report0");
 	populateSettingsForm(myTeamSavedLinks, "folder0");
 
@@ -421,10 +421,10 @@ function linkSearch(e)
 	$('.notifications').removeClass('hidden').text('The search for \"' + searchVal + '\" yielded no results.');
 }
 
-function fillSelect(select, len)
+function fillSelect(select, savedLinks)
 {
-    for (i = 0; i < len; i++)
+    for (i = 0; i < array.length; i++)
     {
-        $(select).append($('<option>', myTeamSavedLinks[i]));
+        $(select).append($('<option>', savedLinks[i]));
     }
 }
