@@ -423,7 +423,7 @@ function linkSearch(e)
 
 function fillSelect(select, savedLinks)
 {
-    for (i = 0; i < array.length; i++)
+    for (i = 0; i < savedLinks.length; i++)
     {
         $(select).append($('<option>', savedLinks[i]));
     }
